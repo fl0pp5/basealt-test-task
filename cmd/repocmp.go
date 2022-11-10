@@ -130,14 +130,10 @@ func main() {
 	checkRequiredFlags()
 	a, b := getBranches()
 	saveBranch(a, b)
-	adiff := branch.Diff(a, b)
-	bdiff := branch.Diff(b, a)
-	newer := branch.Newer(a, b)
-
 	diff := api.BranchDiff{
-		UniquePackages1:    *adiff,
-		UniquePackages2:    *bdiff,
-		NewerPackagesFrom1: *newer,
+		UniquePackages1:    *branch.Diff(a, b),
+		UniquePackages2:    *branch.Diff(b, a),
+		NewerPackagesFrom1: *branch.Newer(a, b),
 	}
 
 	printBranchDiff(&diff)
