@@ -70,7 +70,7 @@ func printBranchDiff(diff *api.BranchDiff) {
 		makeFilename(splitPrefix, "newer"), pretty))
 }
 
-func saveBranch(a, b *api.Branch) {
+func saveBranches(a, b *api.Branch) {
 	if !helpers.HasFlag("cache") {
 		return
 	}
@@ -129,7 +129,7 @@ func main() {
 	initFlags()
 	checkRequiredFlags()
 	a, b := getBranches()
-	saveBranch(a, b)
+	saveBranches(a, b)
 	diff := api.BranchDiff{
 		UniquePackages1:    *branch.Diff(a, b),
 		UniquePackages2:    *branch.Diff(b, a),
