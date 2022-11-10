@@ -5,6 +5,12 @@ const (
 	ExportBranchBinaryPackages = "/export/branch_binary_packages"
 )
 
+var AllowedBranches = map[string]struct{}{
+	"p10":      {},
+	"p9":       {},
+	"sisyphus": {},
+}
+
 type Package struct {
 	Name      string `json:"name"`
 	Epoch     int    `json:"epoch"`

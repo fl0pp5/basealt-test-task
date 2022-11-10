@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"repocmp/pkg/api"
+	"repocmp/pkg/helpers"
 )
 
 func FromFile(filename string) (*api.Branch, error) {
@@ -23,6 +24,10 @@ func FromFile(filename string) (*api.Branch, error) {
 }
 
 func FromHttp(branchName string) (*api.Branch, error) {
+	if err := helpers.ValidateBranchName(branchName); err != nil {
+		return nil, err
+	}
+
 	url := api.BaseUrl + api.ExportBranchBinaryPackages + "/" + branchName
 
 	resp, err := http.Get(url)
