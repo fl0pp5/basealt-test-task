@@ -51,7 +51,7 @@ func getBranches() (*api.Branch, *api.Branch) {
 }
 
 func makeFilename(prefix string, packageName string) string {
-	return fmt.Sprintf("%s_%s_%d\n", prefix, packageName, time.Now().Unix())
+	return fmt.Sprintf("%s_%s_%d", prefix, packageName, time.Now().Unix())
 }
 
 func printBranchDiff(diff *api.BranchDiff) {
