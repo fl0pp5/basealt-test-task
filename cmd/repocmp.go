@@ -55,7 +55,7 @@ func makeFilename(prefix string, packageName string) string {
 }
 
 func printBranchDiff(diff *api.BranchDiff) {
-	if splitPrefix == "" {
+	if !helpers.HasFlag("split") {
 		data, err := helpers.GetMarshaller(diff, pretty)()
 		helpers.FatalIf(err)
 		fmt.Println(string(data))
@@ -71,7 +71,7 @@ func printBranchDiff(diff *api.BranchDiff) {
 }
 
 func saveBranch(a, b *api.Branch) {
-	if savePrefix == "" {
+	if !helpers.HasFlag("cache") {
 		return
 	}
 
