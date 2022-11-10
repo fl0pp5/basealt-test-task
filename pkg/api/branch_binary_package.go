@@ -29,7 +29,7 @@ type Branch struct {
 }
 
 type BranchDiff struct {
-	UniquePackages1    []Package `json:"unique_packages_1"`
-	UniquePackages2    []Package `json:"unique_packages_2"`
-	NewerPackagesFrom1 []Package `json:"newer_packages_from_1"`
+	UniquePackages1    Branch `json:"unique_packages_1"`
+	UniquePackages2    Branch `json:"unique_packages_2"`
+	NewerPackagesFrom1 Branch `json:"newer_packages_from_1"`
 }

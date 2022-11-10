@@ -48,3 +48,21 @@ func FromHttp(branchName string) (*api.Branch, error) {
 
 	return &branch, nil
 }
+
+func Diff(a, b *api.Branch) *api.Branch {
+	tmp := make(map[string]struct{}, b.Length)
+	for _, item := range b.Packages {
+		tmp[item.Name+item.Arch] = struct{}{}
+	}
+
+	var diff api.Branch
+	for _, item := range a.Packages {
+		if _, ok := tmp[item.Name+item.Arch]; !ok {
+			diff.Packages = append(diff.Packages, item)
+		}
+	}
+
+	diff.Length = len(diff.Packages)
+
+	return &diff
+}
