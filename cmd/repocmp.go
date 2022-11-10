@@ -22,7 +22,7 @@ func (f *BranchInfoFlag) fromFile(value string) error {
 	f.get = func() (*api.Branch, error) {
 		return branch.FromFile(f.name)
 	}
-	return nil
+	return helpers.ValidateFilename(f.name)
 }
 
 func (f *BranchInfoFlag) fromHttp(value string) error {
@@ -30,7 +30,7 @@ func (f *BranchInfoFlag) fromHttp(value string) error {
 	f.get = func() (*api.Branch, error) {
 		return branch.FromHttp(f.name)
 	}
-	return nil
+	return helpers.ValidateBranchName(f.name)
 }
 
 var (

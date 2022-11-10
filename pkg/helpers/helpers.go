@@ -15,6 +15,11 @@ func ValidateBranchName(name string) error {
 	return nil
 }
 
+func ValidateFilename(path string) error {
+	_, err := os.Stat(path)
+	return err
+}
+
 func GetMarshaller(v any, indent bool) func() ([]byte, error) {
 	return func() ([]byte, error) {
 		if indent {
