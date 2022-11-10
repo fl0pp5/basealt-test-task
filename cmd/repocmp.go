@@ -70,7 +70,7 @@ func printBranchDiff(diff *api.BranchDiff) {
 		fmt.Println(string(data))
 		return
 	}
-	fmt.Println(pretty)
+
 	helpers.FatalIf(helpers.WriteJsonToFile(diff.UniquePackages1,
 		makeFilename(splitPrefix, "unique1"), pretty))
 	helpers.FatalIf(helpers.WriteJsonToFile(diff.UniquePackages2,
