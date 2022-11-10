@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -36,4 +37,22 @@ func FatalIf(err error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func HasFlag(name string) bool {
+	found := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
+}
+func HasAnyRequiredFlags(required []string) bool {
+	for _, item := range required {
+		if HasFlag(item) {
+			return true
+		}
+	}
+	return false
 }

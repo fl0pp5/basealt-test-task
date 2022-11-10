@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 	"repocmp/pkg/api"
 	"repocmp/pkg/branch"
 	"repocmp/pkg/helpers"
@@ -39,16 +40,6 @@ var (
 	splitPrefix string
 	pretty      bool
 )
-
-var usage = map[string]string{
-	"b1":     "first branch name",
-	"b2":     "second branch name",
-	"fb1":    "first branch filename",
-	"fb2":    "second branch filename",
-	"cache":  "save downloaded branches",
-	"split":  "split output by files",
-	"pretty": "enable formatting",
-}
 
 func getBranches() (*api.Branch, *api.Branch) {
 	a, err := branch1.get()
@@ -95,20 +86,39 @@ func saveBranch(a, b *api.Branch) {
 	}
 }
 
+func checkRequiredFlags() {
+	count := 0
+
+	if !helpers.HasAnyRequiredFlags([]string{"b1", "fb1"}) {
+		count++
+		fmt.Println("option: `[f]b1` is required")
+	}
+
+	if !helpers.HasAnyRequiredFlags([]string{"b2", "fb2"}) {
+		count++
+		fmt.Println("option: `[f]b2` is required")
+	}
+
+	if count > 0 {
+		os.Exit(0)
+	}
+}
+
 func initFlags() {
-	flag.Func("b1", usage["b1"], branch1.fromHttp)
-	flag.Func("b2", usage["b2"], branch2.fromHttp)
-	flag.Func("fb1", usage["fb1"], branch1.fromFile)
-	flag.Func("fb2", usage["fb1"], branch2.fromFile)
-	flag.StringVar(&savePrefix, "cache", "", usage["cache"])
-	flag.StringVar(&splitPrefix, "split", "", usage["split"])
-	flag.BoolVar(&pretty, "pretty", false, usage["pretty"])
+	flag.Func("b1", "first branch name", branch1.fromHttp)
+	flag.Func("b2", "second branch name", branch2.fromHttp)
+	flag.Func("fb1", "first branch filename", branch1.fromFile)
+	flag.Func("fb2", "second branch filename", branch2.fromFile)
+	flag.StringVar(&savePrefix, "cache", "", "save downloaded branches")
+	flag.StringVar(&splitPrefix, "split", "", "split output by files")
+	flag.BoolVar(&pretty, "pretty", false, "enable formatting")
 	flag.Parse()
 
 }
 
 func main() {
 	initFlags()
+	checkRequiredFlags()
 	a, b := getBranches()
 	saveBranch(a, b)
 	adiff := branch.Diff(a, b)
