@@ -105,12 +105,21 @@ func checkRequiredFlags() {
 }
 
 func initFlags() {
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(),
+			"Usage: %s <option> [args]\n"+
+				"Example: %s -b1 <branch-name> -fb2 <filename> -cache <file-prefix> -pretty\n",
+			os.Args[0], os.Args[0])
+		flag.PrintDefaults()
+	}
 	flag.Func("b1", "first branch name", branch1.fromHttp)
 	flag.Func("b2", "second branch name", branch2.fromHttp)
 	flag.Func("fb1", "first branch filename", branch1.fromFile)
 	flag.Func("fb2", "second branch filename", branch2.fromFile)
-	flag.StringVar(&savePrefix, "cache", "", "save downloaded branches")
-	flag.StringVar(&splitPrefix, "split", "", "split output by files")
+	flag.StringVar(&savePrefix, "cache", "",
+		"save downloaded branches. Usage: [...] -cache <file-prefix> [...]")
+	flag.StringVar(&splitPrefix, "split", "",
+		"split output by files. Usage: [...] -split <file-prefix> [...]")
 	flag.BoolVar(&pretty, "pretty", false, "enable formatting")
 	flag.Parse()
 
