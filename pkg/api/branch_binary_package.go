@@ -1,5 +1,10 @@
 package api
 
+const (
+	BaseUrl                    = "https://rdb.altlinux.org/api"
+	ExportBranchBinaryPackages = "/export/branch_binary_packages"
+)
+
 type Package struct {
 	Name      string `json:"name"`
 	Epoch     int    `json:"epoch"`
