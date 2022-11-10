@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"repocmp/pkg/api"
 )
@@ -35,7 +34,8 @@ func WriteJsonToFile(v any, filename string, indent bool) error {
 
 func FatalIf(err error) {
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
 	}
 }
 
