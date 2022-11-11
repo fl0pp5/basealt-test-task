@@ -3,6 +3,8 @@ Utility to find difference between two branches
 
 ## Building ##
 ```shell
+$ git clone https://github.com/fl0pp5/basealt-test-task.git
+$ cd basealt-test-task
 $ go build cmd/repocmp.go
 ```
 
